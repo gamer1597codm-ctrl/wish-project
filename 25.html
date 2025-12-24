@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Merry Christmas 🎄</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Center the 9:16 frame */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* 9:16 container */
+.app {
+    position: relative;
+    width: min(100vw, 56.25vh);   /* 9:16 ratio */
+    height: min(177.78vw, 100vh);
+    background: black;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Background video */
+.app video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
+
+/* Soft overlay */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.05), rgba(0,0,0,0.75));
+    z-index: 1;
+}
+
+/* Title */
+.content {
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    z-index: 2;
+}
+
+h1 {
+    font-size: 3.2rem;
+    animation: glow 2.5s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px gold; }
+    to { text-shadow: 0 0 35px red; }
+}
+
+.tap {
+    margin-top: 12px;
+    font-size: 1.1rem;
+    opacity: 0.85;
+}
+
+/* NOTE */
+.note {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.35);
+    padding: 18px 22px;
+    border-radius: 16px;
+    color: white;
+    font-size: 1.05rem;
+    text-align: center;
+    line-height: 1.6;
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    animation: noteIn 1.3s ease forwards;
+    z-index: 3;
+}
+
+@keyframes noteIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 25px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* Snow */
+.snow {
+    position: absolute;
+    top: -10px;
+    z-index: 2;
+    animation: fall linear infinite;
+    opacity: 0.9;
+}
+
+@keyframes fall {
+    to { transform: translateY(110%); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app" id="app">
+
+    <!-- 🎥 Night shining Christmas tree video -->
+    <video autoplay muted loop playsinline>
+        <source src="night_christmas_tree.mp4" type="video/mp4">
+    </video>
+
+    <div class="overlay"></div>
+
+    <div class="content">
+        <h1>🎄 Merry Christmas 🎄</h1>
+        <div class="tap">Tap anywhere ✨</div>
+    </div>
+
+</div>
+
+<script>
+const app = document.getElementById("app");
+
+// Snow
+for (let i = 0; i < 45; i++) {
+    let s = document.createElement("div");
+    s.className = "snow";
+    s.innerHTML = "❄";
+    s.style.left = Math.random() * 100 + "%";
+    s.style.fontSize = (Math.random() * 10 + 10) + "px";
+    s.style.animationDuration = (Math.random() * 6 + 6) + "s";
+    app.appendChild(s);
+}
+
+let shown = false;
+
+// Tap → show ONE note
+app.addEventListener("click", () => {
+    if (shown) return;
+    shown = true;
+
+    let note = document.createElement("div");
+    note.className = "note";
+    note.innerHTML = `
+        🌿 May your health always be good and strong.<br>
+        😊 Enjoy life with happiness and peace in your heart.<br>
+        ✨ Smile more, worry less, and live every moment fully.<br>
+        🎄 May this Christmas bring warmth, hope, and calm nights.<br><br>
+        <strong>— For Pineapple 🍍</strong>
+    `;
+    app.appendChild(note);
+});
+</script>
+
+</body>
+</html>
